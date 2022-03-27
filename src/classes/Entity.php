@@ -6,6 +6,7 @@ namespace DR2GSistemas\korm\classes;
 
 use DR2GSistemas\korm\interfaces\IEntity;
 use DR2GSistemas\korm\interfaces\IEntityUtils;
+use Exception;
 
 class Entity implements IEntity, IEntityUtils
 {
@@ -48,29 +49,92 @@ class Entity implements IEntity, IEntityUtils
         }
     }
 
-    public function insert()
+    public function insert($primaryKeyFieldName = "codigo")
     {
-        // TODO: Implement insert() method.
+        /*si existe un codigo predefinido, ejecutar update*/
+//        if ($this->$primaryKeyFieldName) {
+//            return self::update();
+//        }
+
+
+        $tablename = $this->getTablename();
+        $fields = [];
+        $values = [];
+        $_fields = get_object_vars($this);
+        foreach ($_fields as $key => $value) {
+            if ($key != $primaryKeyFieldName) {
+                array_push($fields, $key);
+                array_push($values, $this->parseType($value));
+            }
+        }
+        $_f = join(",", $fields);
+        $_v = join(",", $values);
+
+        return "insert into $tablename ($_f) values ($_v)";
     }
 
-    public function update()
+    public function update($primaryKeyColumnName = 'codigo', $includeNullValues = true)
     {
-        // TODO: Implement update() method.
+        $tablename = $this->getTablename();
+        $props = get_object_vars($this);
+        $sets = [];
+        foreach ($props as $key => $value) {
+
+            if (is_null($value)) {
+                if ($includeNullValues) {
+                    array_push($sets, "$key=" . $this->parseType($value));
+                }
+            } else {
+                if ($key != $primaryKeyColumnName) {
+                    array_push($sets, "$key=" . $this->parseType($value));
+                }
+            }
+        }
+        $sets = join(",", $sets);
+        return "update $tablename set $sets where codigo=" . $this->$primaryKeyColumnName;
     }
 
     public function delete()
     {
-        // TODO: Implement delete() method.
+        $tablename = $this->getTablename();
+        $primaryKeyName = "";
+        $value = 0;
+
+        $stmt = "delete from $tablename where $primaryKeyName=$value";
+        return $stmt;
+
+//        $tablename = $this->getTablename();
+//        return "delete from $tablename where $primaryKeyColumnName = " . $this->$primaryKeyColumnName;
     }
 
+    /**
+     * Create a object from json data
+     * @param $data
+     * @return Entity
+     * @throws Exception
+     */
     public function fromJson($data)
     {
-        // TODO: Implement fromJson() method.
+        if (!isset($data)) {
+            throw new Exception("fromJson: Argument is invalid or missing");
+        }
+        $new_object = new self();
+        $new_object->populate($data);
+        return $new_object;
     }
 
+    /**
+     * Populate the object with attrs
+     * @param $data array
+     */
     public function populate($data)
     {
         foreach ($data as $attr => $value) {
+            /*check especials keys*/
+            $is_private_key = str_starts_with($attr, "_");
+            if (is_array($value) || $is_private_key) {
+                continue;
+            }
             $this->$attr = $value;
         }
     }
