@@ -66,10 +66,18 @@ GhostlyDatabaseInstanceManager::getInstace()->executeOrFail($stmt);
 
 ````
 From Villeta, Paraguay with :sparkling_heart:
+
 Desde Villeta, Paraguay con :sparkling_heart:
 
 
-history
+**History**
 
-dev-0.1: init the journey
+- dev-0.1: init the journey
 
+**Todo:**
+
+- [ ] Relations :link:
+- [ ] Conectors :electric_plug:
+- [ ] Build classes from database scheme :building_construction:
+- [ ] Do better documentation :book:
+- [ ] Enjoy a :beer: of a contributor :smile: (optional)
