@@ -10,14 +10,30 @@ use Exception;
 
 class Entity implements IEntity, IEntityUtils
 {
+    /**
+     * @var string|null name of table, default is the pluralized class name
+     */
     public ?string $tablename = null;
+    /**
+     * @var string name of primary key field
+     */
+    public string $primaryKeyFieldName = "codigo";
 
+
+    /**
+     * Build a select all statement
+     * @return string
+     */
     public function listaAll()
     {
         $tablename = $this->getTablename();
         return "select * from " . $tablename;
     }
 
+    /**
+     * Internal funcion to parse the tablename
+     * @return string
+     */
     function getTablename(): string
     {
         if (!is_null($this->tablename)) {
@@ -31,6 +47,22 @@ class Entity implements IEntity, IEntityUtils
         return $tablename;
     }
 
+    /**
+     * Internal funcion to parse the primaryKeyFieldName
+     * @return string
+     */
+    function getPrimaryKeyFieldName(): string
+    {
+        return $this->primaryKeyFieldName ?? 'codigo';
+    }
+
+    /**
+     * Internal funcion to pluralize
+     *
+     * @param $singular
+     * @param null $plural
+     * @return mixed|string
+     */
     private static function pluralize($singular, $plural = null)
     {
         if ($plural !== null) return $plural;
@@ -49,62 +81,78 @@ class Entity implements IEntity, IEntityUtils
         }
     }
 
-    public function insert($primaryKeyFieldName = "codigo")
+
+    /**
+     * Build a insert statement
+     * @return string
+     */
+    public function insert()
     {
-        /*si existe un codigo predefinido, ejecutar update*/
-//        if ($this->$primaryKeyFieldName) {
-//            return self::update();
-//        }
-
-
         $tablename = $this->getTablename();
+        $pkFieldName = $this->getPrimaryKeyFieldName();
+
         $fields = [];
         $values = [];
-        $_fields = get_object_vars($this);
-        foreach ($_fields as $key => $value) {
-            if ($key != $primaryKeyFieldName) {
-                array_push($fields, $key);
-                array_push($values, $this->parseType($value));
-            }
+        $listFields = get_object_vars($this);
+
+        /*si existe un codigo predefinido, ejecutar update*/
+        if (array_key_exists($pkFieldName, $listFields)) {
+            return self::update();
+        }
+
+        unset($listFields['tablename']); //remove the tablename
+        unset($listFields['primaryKeyFieldName']); //remove the primarykeyfieldname
+        foreach ($listFields as $key => $value) {
+            array_push($fields, $key);
+            array_push($values, $this->parseType($value));
         }
         $_f = join(",", $fields);
         $_v = join(",", $values);
-
         return "insert into $tablename ($_f) values ($_v)";
     }
 
-    public function update($primaryKeyColumnName = 'codigo', $includeNullValues = true)
+    /**
+     * Build a update statement
+     *
+     * @param bool $includeNullValues allow to include null values on statement
+     * @return string
+     *
+     */
+    public function update($includeNullValues = true)
     {
         $tablename = $this->getTablename();
+        $pkfieldname = $this->getPrimaryKeyFieldName();
+        $pkValue = $this->$pkfieldname;
         $props = get_object_vars($this);
+        unset($props['tablename']); //remove the tablename
+        unset($props['primaryKeyFieldName']); //remove the primarykeyfieldname
         $sets = [];
         foreach ($props as $key => $value) {
-
             if (is_null($value)) {
                 if ($includeNullValues) {
                     array_push($sets, "$key=" . $this->parseType($value));
                 }
             } else {
-                if ($key != $primaryKeyColumnName) {
+                if ($key != $pkfieldname) {
                     array_push($sets, "$key=" . $this->parseType($value));
                 }
             }
         }
         $sets = join(",", $sets);
-        return "update $tablename set $sets where codigo=" . $this->$primaryKeyColumnName;
+        return "update $tablename set $sets where codigo=" . $pkValue;
     }
 
+    /**
+     * Build a delete statement
+     * @return string
+     */
     public function delete()
     {
         $tablename = $this->getTablename();
-        $primaryKeyName = "";
-        $value = 0;
-
-        $stmt = "delete from $tablename where $primaryKeyName=$value";
+        $primaryKeyFieldName = $this->getPrimaryKeyFieldName();
+        $value = $this->$primaryKeyFieldName;
+        $stmt = "delete from $tablename where $primaryKeyFieldName=$value";
         return $stmt;
-
-//        $tablename = $this->getTablename();
-//        return "delete from $tablename where $primaryKeyColumnName = " . $this->$primaryKeyColumnName;
     }
 
     /**
@@ -113,7 +161,7 @@ class Entity implements IEntity, IEntityUtils
      * @return Entity
      * @throws Exception
      */
-    public function fromJson($data)
+    public static function fromJson($data)
     {
         if (!isset($data)) {
             throw new Exception("fromJson: Argument is invalid or missing");
@@ -139,6 +187,11 @@ class Entity implements IEntity, IEntityUtils
         }
     }
 
+    /**
+     * Internal function to parse string over other types
+     * @param $value
+     * @return string
+     */
     private function parseType($value)
     {
         if (is_string($value)) {
@@ -150,4 +203,22 @@ class Entity implements IEntity, IEntityUtils
     }
 
 
+    /**
+     *
+     * Select by primaryField value
+     *
+     * @param $value
+     * @return string
+     * @throws Exception
+     */
+    public function findByPrimaryKey($value)
+    {
+        if (!is_null($value)) {
+            throw new Exception("findByPrimaryKey: argument is invalid or missin");
+        }
+        $tablename = $this->getTablename();
+        $primaryKeyFieldName = $this->primaryKeyField;
+        $stmt = "select * from $tablename where $primaryKeyFieldName=$value";
+        return $stmt;
+    }
 }

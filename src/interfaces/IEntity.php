@@ -9,6 +9,8 @@ interface IEntity
 
     public function listaAll();
 
+    public function findByPrimaryKey($value);
+
     public function insert();
 
     public function update();
