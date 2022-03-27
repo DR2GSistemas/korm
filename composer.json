@@ -1,0 +1,30 @@
+{
+  "name": "dr2gsistemas/korm",
+  "description": "Pseudo library orm utils",
+  "minimum-stability": "stable",
+  "license": "Propietaria",
+  "homepage": "http://dr2gsistemas.com",
+  "keywords": [
+    "orm",
+    "utils",
+    "database",
+    "entity"
+  ],
+  "type": "library",
+  "authors": [
+    {
+      "name": "Dario Garcia",
+      "email": "dario61081@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DR2GSistemas\\korm\\": "src/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+    "phpunit/phpunit": "8.*"
+  }
+}
