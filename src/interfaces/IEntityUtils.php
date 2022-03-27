@@ -6,7 +6,7 @@ namespace DR2GSistemas\korm\interfaces;
 
 interface IEntityUtils
 {
-    public function fromJson($data);
+    public static function fromJson($data);
 
     public function populate($data);
 

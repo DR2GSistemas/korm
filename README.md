@@ -72,10 +72,17 @@ Desde Villeta, Paraguay con :sparkling_heart:
 
 **History**
 
-- dev-0.1: init the journey
+- 0.1.0:
+    -   init the journey
+- 0.1.1:
+    -   bugfix on detect primaryKeyFieldName on update() and insert()
+    -   bugfix on detect tablename fieldname on insert(), update() and delete()
+    -   add EntityTest.php for testing :godmode:
+
 
 **Todo:**
 
+- [ ] Reach better performance on build statements :speedboat:
 - [ ] Relations :link:
 - [ ] Conectors :electric_plug:
 - [ ] Build classes from database scheme :building_construction:
