@@ -55,3 +55,4 @@ GhostlyDatabaseInstanceManager::getInstace()->executeOrFail($stmt);
 history
 
 dev-0.1: init the journey
+
