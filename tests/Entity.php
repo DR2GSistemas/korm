@@ -4,11 +4,7 @@
 it("testing entity class", function () {
 
     test("testClassTablename", function () {
-
-
         expect(true)->toBeTrue();
-
-
     });
 
 

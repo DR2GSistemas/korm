@@ -2,3 +2,6 @@
 .phpunit.result.cache
 composer.lock
 .idea
+composer.phar
+.editorconfig
+phpunit.xml
