@@ -5,10 +5,11 @@ namespace DR2GSistemas\korm\classes;
 
 
 use DR2GSistemas\korm\interfaces\IEntity;
-use DR2GSistemas\korm\interfaces\IEntityUtils;
+use DR2GSistemas\korm\interfaces\ISelect;
+use DR2GSistemas\korm\interfaces\IWhere;
 use Exception;
 
-class Entity implements IEntity, IEntityUtils
+class Entity implements IEntity, ISelect
 {
     /**
      * @var string|null name of table, default is the pluralized class name
@@ -237,4 +238,36 @@ class Entity implements IEntity, IEntityUtils
         $stmt = "select * from $tablename where $primaryKeyFieldName=$value";
         return $stmt;
     }
+
+    public function join(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function innerJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function outterJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function leftJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function rightJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function Select(array $fields = []): IWhere
+    {
+
+    }
+
+
 }
