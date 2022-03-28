@@ -202,6 +202,7 @@ class Entity implements IEntity, IEntityUtils
         }
     }
 
+
     /**
      * Internal function to parse string over other types
      * @param $value
