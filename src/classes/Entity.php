@@ -37,14 +37,27 @@ class Entity implements IEntity, IEntityUtils
     function getTablename(): string
     {
         if (!is_null($this->tablename)) {
-            $tablename = $this->tablename;
+            $tblname = $this->tablename;
         } else {
             $p = preg_split("/[\\\]/", strtolower(get_class($this)));
-            $classname = array_pop($p);
-            $tablename = self::pluralize($classname);
+            $clsname = array_pop($p);
+            $tblname = self::pluralize($clsname);
+            unset ($clsname);
         }
-        unset ($classname);
-        return $tablename;
+
+        return $tblname;
+    }
+
+    /**
+     * Parse when invoque from static call
+     * @param $value
+     */
+    function parseStaticCallTablename($value): void
+    {
+        $p = preg_split("/[\\\]/", strtolower($value));
+        $classname = array_pop($p);
+        $tblname = self::pluralize($classname);
+        $this->tablename = $tblname;
     }
 
     /**
@@ -75,6 +88,7 @@ class Entity implements IEntity, IEntityUtils
             case 'r':
             case 'l':
             case 'n':
+            case 'o':
                 return $singular . 'es';
             default:
                 return $singular . 's';
@@ -167,6 +181,7 @@ class Entity implements IEntity, IEntityUtils
             throw new Exception("fromJson: Argument is invalid or missing");
         }
         $new_object = new self();
+        $new_object->parseStaticCallTablename(get_called_class()); //path candidate for get the right tablename in static constructor
         $new_object->populate($data);
         return $new_object;
     }
@@ -179,7 +194,7 @@ class Entity implements IEntity, IEntityUtils
     {
         foreach ($data as $attr => $value) {
             /*check especials keys*/
-            $is_private_key = str_starts_with($attr, "_");
+            $is_private_key = strpos($attr, "_") === 0;
             if (is_array($value) || $is_private_key) {
                 continue;
             }
