@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="phpunit.xml" type="PestRunConfigurationType">
+        <CommandLine>
+            <PhpTestInterpreterSettings>
+                <option name="interpreterName" value="PHP 8.0"/>
+            </PhpTestInterpreterSettings>
+        </CommandLine>
+        <option name="pestRunnerSettings">
+            <PestRunner directory="$PROJECT_DIR$/tests" method=""/>
+        </option>
+        <option name="runnerSettings">
+            <PhpTestRunnerSettings directory="$PROJECT_DIR$/tests" method=""/>
+        </option>
+        <method v="2"/>
+    </configuration>
+</component>
