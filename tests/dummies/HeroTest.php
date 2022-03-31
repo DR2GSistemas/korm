@@ -13,20 +13,20 @@ class HeroTest extends TestCase
     public function testStaticCall()
     {
         $hero = Hero::fromJson($this->test_data);
-        self::assertEquals("heroes", $hero->getTablename());
+        self::assertEquals("heros", $hero->getTablename());
 
     }
 
     public function testCall()
     {
         $hero = new Hero();
-        self::assertEquals("heroes", $hero->getTablename());
+        self::assertEquals("heros", $hero->getTablename());
     }
 
     public function testInsert()
     {
         $hero = Hero::fromJson($this->test_data);
-        self::assertEquals("insert into heroes (name) values ('the batman')", $hero->insert());
+        self::assertEquals("insert into heros (name) values ('the batman')", $hero->insert());
 
     }
 
@@ -34,9 +34,9 @@ class HeroTest extends TestCase
     {
         $hero = Hero::fromJson($this->test_data);
         $hero->populate(["codigo" => 1]);
-        self::assertEquals("update heroes set name='the batman' where codigo=1", $hero->update());
+        self::assertEquals("update heros set name='the batman' where codigo=1", $hero->update());
         $hero->populate(["codigo" => 200]);
-        self::assertEquals("update heroes set name='the batman' where codigo=200", $hero->update());
+        self::assertEquals("update heros set name='the batman' where codigo=200", $hero->update());
 
     }
 
@@ -44,8 +44,7 @@ class HeroTest extends TestCase
     {
         $hero = Hero::fromJson($this->test_data);
         $hero->populate(["codigo" => 1]);
-        self::assertEquals("delete from heroes where codigo=1", $hero->delete());
-
+        self::assertEquals("delete from heros where codigo=1", $hero->delete());
     }
 
     protected function setUp(): void

@@ -5,11 +5,9 @@ namespace DR2GSistemas\korm\classes;
 
 
 use DR2GSistemas\korm\interfaces\IEntity;
-use DR2GSistemas\korm\interfaces\ISelect;
-use DR2GSistemas\korm\interfaces\IWhere;
 use Exception;
 
-class Entity implements IEntity, ISelect
+class Entity implements IEntity
 {
     /**
      * @var string|null name of table, default is the pluralized class name
@@ -89,8 +87,8 @@ class Entity implements IEntity, ISelect
             case 'r':
             case 'l':
             case 'n':
-            case 'o':
                 return $singular . 'es';
+            case 'o':
             default:
                 return $singular . 's';
         }
@@ -111,7 +109,7 @@ class Entity implements IEntity, ISelect
         $listFields = get_object_vars($this);
 
         /*si existe un codigo predefinido, ejecutar update*/
-        if (array_key_exists($pkFieldName, $listFields)) {
+        if (array_key_exists($pkFieldName, $listFields) && $listFields[$pkFieldName] != null) {
             return self::update();
         }
 
@@ -262,11 +260,6 @@ class Entity implements IEntity, ISelect
     public function rightJoin(IEntity $entity): IEntity
     {
         return $this;
-    }
-
-    public function Select(array $fields = []): IWhere
-    {
-
     }
 
 
