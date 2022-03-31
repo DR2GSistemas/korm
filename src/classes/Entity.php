@@ -5,10 +5,9 @@ namespace DR2GSistemas\korm\classes;
 
 
 use DR2GSistemas\korm\interfaces\IEntity;
-use DR2GSistemas\korm\interfaces\IEntityUtils;
 use Exception;
 
-class Entity implements IEntity, IEntityUtils
+class Entity implements IEntity
 {
     /**
      * @var string|null name of table, default is the pluralized class name
@@ -88,8 +87,8 @@ class Entity implements IEntity, IEntityUtils
             case 'r':
             case 'l':
             case 'n':
-            case 'o':
                 return $singular . 'es';
+            case 'o':
             default:
                 return $singular . 's';
         }
@@ -110,7 +109,7 @@ class Entity implements IEntity, IEntityUtils
         $listFields = get_object_vars($this);
 
         /*si existe un codigo predefinido, ejecutar update*/
-        if (array_key_exists($pkFieldName, $listFields)) {
+        if (array_key_exists($pkFieldName, $listFields) && $listFields[$pkFieldName] != null) {
             return self::update();
         }
 
@@ -237,4 +236,31 @@ class Entity implements IEntity, IEntityUtils
         $stmt = "select * from $tablename where $primaryKeyFieldName=$value";
         return $stmt;
     }
+
+    public function join(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function innerJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function outterJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function leftJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+    public function rightJoin(IEntity $entity): IEntity
+    {
+        return $this;
+    }
+
+
 }
