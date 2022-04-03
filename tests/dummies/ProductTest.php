@@ -46,6 +46,19 @@ class ProductTest extends TestCase
 
     }
 
+    public function testSelectAll()
+    {
+        $product = new Product();
+        self::assertEquals("select * from products", $product->selectAll());
+    }
+
+    public function testSelectOne()
+    {
+        $product = new Product();
+        $product->populate(["codigo" => 1]);
+        self::assertEquals("select * from products where codigo=1", $product->selectOne(1));
+    }
+
     protected function setUp(): void
     {
         $this->test_data = ["name" => "test product", "value" => 12.34];

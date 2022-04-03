@@ -47,6 +47,20 @@ class HeroTest extends TestCase
         self::assertEquals("delete from heros where codigo=1", $hero->delete());
     }
 
+    public function testSelectAll()
+    {
+        $hero = Hero::fromJson($this->test_data);
+        self::assertEquals("select * from heros", $hero->selectAll());
+    }
+
+    public function testSelectOne()
+    {
+        $hero = Hero::fromJson($this->test_data);
+        $hero->populate(["codigo" => 1]);
+        self::assertEquals("select * from heros where codigo=1", $hero->selectOne(1));
+    }
+
+
     protected function setUp(): void
     {
         $this->test_data = ["name" => "the batman"];
