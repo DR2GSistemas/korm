@@ -69,18 +69,24 @@ From Villeta, Paraguay with :sparkling_heart:
 
 Desde Villeta, Paraguay con :sparkling_heart:
 
-
 **History**
 
 - 0.1.0:
-    -   init the journey
-- 0.1.1:
-    -   bugfix on detect primaryKeyFieldName on update() and insert()
-    -   bugfix on detect tablename fieldname on insert(), update() and delete()
-    -   add EntityTest.php for testing :godmode:
+    - init the journey
 
+- 0.1.1:
+    - bugfix on detect primaryKeyFieldName on update() and insert()
+    - bugfix on detect tablename fieldname on insert(), update() and delete()
+    - add EntityTest.php for testing :godmode:
+
+- 0.1.2:
+    - some small fixes
+
+- 0.1.3
+    - add selectAll() and selectOne()
 
 **Todo:**
+
 - [x] add functions selectAll() and selectOne()
 - [x] test functions selectAll() and selectOne()
 - [ ] Reach better performance on build statements :speedboat:
