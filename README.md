@@ -81,7 +81,8 @@ Desde Villeta, Paraguay con :sparkling_heart:
 
 
 **Todo:**
-
+- [x] add functions selectAll() and selectOne()
+- [x] test functions selectAll() and selectOne()
 - [ ] Reach better performance on build statements :speedboat:
 - [ ] Relations :link:
 - [ ] Conectors :electric_plug:

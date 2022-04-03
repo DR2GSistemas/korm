@@ -94,6 +94,20 @@ class Entity implements IEntity
         }
     }
 
+    public function selectAll()
+    {
+        $tablename = $this->getTablename();
+        $stmt = "select * from $tablename";
+        return $stmt;
+    }
+
+    public function selectOne($codigo)
+    {
+        $tablename = $this->getTablename();
+        $primaryKeyFieldName = $this->getPrimaryKeyFieldName();
+        $stmt = "select * from $tablename where $primaryKeyFieldName=$codigo";
+        return $stmt;
+    }
 
     /**
      * Build a insert statement
