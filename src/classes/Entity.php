@@ -13,6 +13,7 @@ class Entity implements IEntity
      * @var string|null name of table, default is the pluralized class name
      */
     public ?string $tablename = null;
+    public bool $checkInsertToUpdate = true;
     /**
      * @var string name of primary key field
      */
@@ -123,12 +124,13 @@ class Entity implements IEntity
         $listFields = get_object_vars($this);
 
         /*si existe un codigo predefinido, ejecutar update*/
-        if (array_key_exists($pkFieldName, $listFields) && $listFields[$pkFieldName] != null) {
+        if ($this->checkInsertToUpdate && array_key_exists($pkFieldName, $listFields) && $listFields[$pkFieldName] != null) {
             return self::update();
         }
 
         unset($listFields['tablename']); //remove the tablename
         unset($listFields['primaryKeyFieldName']); //remove the primarykeyfieldname
+        unset($listFields['checkInsertToUpdate']); //remove check
         foreach ($listFields as $key => $value) {
             array_push($fields, $key);
             array_push($values, $this->parseType($value));
@@ -153,6 +155,7 @@ class Entity implements IEntity
         $props = get_object_vars($this);
         unset($props['tablename']); //remove the tablename
         unset($props['primaryKeyFieldName']); //remove the primarykeyfieldname
+        unset($props['checkInsertToUpdate']); //remove check
         $sets = [];
         foreach ($props as $key => $value) {
             if (is_null($value)) {
