@@ -25,6 +25,9 @@
         "preferred-install": "dist",
         "allow-plugins": {
             "pestphp/pest-plugin": true
+        },
+        "platform": {
+            "php": ">=8.0.0"
         }
     },
     "autoload": {
@@ -44,5 +47,8 @@
         "test": "vendor\\bin\\pest  ",
         "test-coverage": "vendor\\bin\\pest --coverage ",
         "test-phpunit": "vendor\\bin\\phpunit "
+    },
+    "require": {
+        "ext-pdo": "*"
     }
 }
