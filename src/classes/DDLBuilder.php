@@ -43,8 +43,6 @@ class DDLBuilder
                 $stmt .= $c->isAutoIncrement() ? " AUTO_INCREMENT" : "";
 
                 $columns[] = $stmt;
-
-
             }
 
 
