@@ -11,6 +11,7 @@ Pseudo library to be a orm utility.
 ````PHP
 <?php
 
+use DR2GSistemas\korm\classes\Column;
 use DR2GSistemas\korm\classes\Entity;
 
 
@@ -19,8 +20,11 @@ use DR2GSistemas\korm\classes\Entity;
 class Product extends Entity {
     //typed public fields
     //variables publicas tipadas
+    #[Column(type:"integer",  primaryKey:true, autoincrement:true)]
     public int $id;
+    #[Column(type:"varchar(255)", nullable: false )]
     public string $name;
+    #[Column(type:"numeric(10,2)", nullable: true)]
     public float $price;
 
     public function __construct() {
@@ -28,7 +32,6 @@ class Product extends Entity {
         //opcional: se puede definir el nombre de la tabla en el contructor
         $this->tablename = 'products';
     }
-
 }
 
 

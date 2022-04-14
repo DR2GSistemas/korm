@@ -10,13 +10,13 @@ use DR2GSistemas\korm\classes\Entity;
 
 class Product extends Entity
 {
-    #[Column("codigo", "int", true)]
+    #[Column("int", autoincrement: true, primarykey: true)]
     public int $codigo;
-    #[Column("nombre", "varchar(100)", false, false, true)]
-    public string $name;
-    #[Column("precio", "numeric(10,2)")]
-    public float $value;
-    #[Column("date", "date")]
+    #[Column("varchar(100)", nullable: false)]
+    public string $nombre;
+    #[Column("numeric(10,2)")]
+    public float $precio;
+    #[Column("date")]
     public $date;
 
 

@@ -36,7 +36,7 @@ class DDLBuilder
         foreach ($class->getProperties() as $property) {
             foreach ($property->getAttributes(Column::class) as $column) {
                 $c = $column->newInstance();
-
+                $c->setName($property->getName());
                 $stmt = $c->getName() . " " . $c->getType();
                 $stmt .= $c->isNullable() ? "" : " NOT NULL";
                 $stmt .= $c->isPrimaryKey() ? " PRIMARY KEY" : "";
