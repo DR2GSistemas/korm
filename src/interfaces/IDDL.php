@@ -6,6 +6,7 @@ namespace DR2GSistemas\korm\interfaces;
 
 interface IDDL
 {
+
     public function _createDDL(): string;
 
     public function _dropDDL(): string;
@@ -17,4 +18,6 @@ interface IDDL
     public function _createForeignKeysDDL(): array;
 
     public function _dropForeignKeysDDL(): array;
+
+    public function _resetAutoIncrement(int $value = 1): string;
 }

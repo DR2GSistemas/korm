@@ -97,5 +97,20 @@ class DDLBuilderTest extends TestCase
 
     }
 
+    public function testIDDL_resetAutoincrement()
+    {
+
+        $product = new Product();
+        $stmt = $product->_resetAutoincrement();
+        $correct_stmt = "ALTER TABLE products AUTO_INCREMENT = 1";
+        $this->assertEquals($correct_stmt, $stmt);
+
+        $hero = new Hero();
+        $stmt = $hero->_resetAutoincrement(55);
+        $correct_stmt = "ALTER TABLE heroes AUTO_INCREMENT = 55";
+        $this->assertEquals($correct_stmt, $stmt);
+
+    }
+
 
 }

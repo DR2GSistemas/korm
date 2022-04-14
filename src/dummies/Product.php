@@ -8,7 +8,9 @@ use DR2GSistemas\korm\classes\Column;
 use DR2GSistemas\korm\classes\Entity;
 use DR2GSistemas\korm\classes\Index;
 
-
+/*
+ * @tablename productossss
+ */
 class Product extends Entity
 {
     #[Column("int", autoincrement: true, primarykey: true)]
