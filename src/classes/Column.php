@@ -10,15 +10,37 @@ class Column
 {
     private string $name;
     private string $type;
-    private bool $nullable = false;
+    private bool $nullable = true;
+    private bool $primaryKey = false;
+    private bool $autoincrement = false;
+    private bool $unique = false;
+    private bool $index = false;
 
 
-    public function __construct(string $name, string $type, bool $notnull = false)
+    /**
+     * Column constructor.
+     * @param string $name nombre del campo
+     * @param string $type tipo del campo
+     * @param bool $primarykey si es llave primaria
+     * @param bool $nullable si es nulo
+     * @param bool $index si es indice
+     * @param bool $unique si es unico
+     */
+    public function __construct(
+        string $name,
+        string $type,
+        bool $primarykey = false,
+        bool $nullable = true,
+        bool $index = false,
+        bool $unique = false)
     {
         $this->name = $name;
         $this->type = $type;
-        $this->notnull = $notnull;
-
+        $this->nullable = $nullable;
+        $this->primaryKey = $primarykey;
+        $this->autoincrement = $primarykey;
+        $this->index = $index;
+        $this->unique = $unique;
     }
 
     /**
@@ -67,6 +89,70 @@ class Column
     public function setNullable(bool $nullable): void
     {
         $this->nullable = $nullable;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrimaryKey(): bool
+    {
+        return $this->primaryKey;
+    }
+
+    /**
+     * @param bool $primaryKey
+     */
+    public function setPrimaryKey(bool $primaryKey): void
+    {
+        $this->primaryKey = $primaryKey;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAutoincrement(): bool
+    {
+        return $this->autoincrement;
+    }
+
+    /**
+     * @param bool $autoincrement
+     */
+    public function setAutoincrement(bool $autoincrement): void
+    {
+        $this->autoincrement = $autoincrement;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnique(): bool
+    {
+        return $this->unique;
+    }
+
+    /**
+     * @param bool $unique
+     */
+    public function setUnique(bool $unique): void
+    {
+        $this->unique = $unique;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIndex(): bool
+    {
+        return $this->index;
+    }
+
+    /**
+     * @param bool $index
+     */
+    public function setIndex(bool $index): void
+    {
+        $this->index = $index;
     }
 
 

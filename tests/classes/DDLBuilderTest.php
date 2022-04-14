@@ -12,19 +12,19 @@ class DDLBuilderTest extends TestCase
 
     public function testCreateTableFromHero()
     {
-        $ddl = DDLBuilder::createTable(Hero::class);
-        $this->assertEquals(
-            'CREATE TABLE heroes (codigo int, nombre varchar(100))'
-            , $ddl);
+        $ddl = new DDLBuilder();
+        $stmt = $ddl->createTable(Hero::class);
+        $correct_stmt = "CREATE TABLE heroes (codigo int PRIMARY KEY AUTO_INCREMENT, nombre varchar(100))";
+        $this->assertEquals($correct_stmt, $stmt);
 
     }
 
     public function testCreateTableFromProduct()
     {
-        $ddl = DDLBuilder::createTable(Product::class);
-        $this->assertEquals(
-            'CREATE TABLE products (codigo int, nombre varchar(100), precio numeric(10,2))'
-            , $ddl);
+        $ddl = new DDLBuilder();
+        $stmt = $ddl->createTable(Product::class);
+        $correct_stmt = "CREATE TABLE products (codigo int PRIMARY KEY AUTO_INCREMENT, nombre varchar(100) NOT NULL, precio numeric(10,2), date date)";
+        $this->assertEquals($correct_stmt, $stmt);
     }
 
 

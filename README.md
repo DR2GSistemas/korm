@@ -85,6 +85,9 @@ Desde Villeta, Paraguay con :sparkling_heart:
 - 0.1.3
     - add selectAll() and selectOne()
 
+- 0.1.4
+    - add DDLBuilder class
+
 **Todo:**
 
 - [x] add functions selectAll() and selectOne()
@@ -92,6 +95,7 @@ Desde Villeta, Paraguay con :sparkling_heart:
 - [ ] Reach better performance on build statements :speedboat:
 - [ ] Relations :link:
 - [ ] Conectors :electric_plug:
+- [x] Build from classes to database scheme :electric_plug:
 - [ ] Build classes from database scheme :building_construction:
 - [ ] Do better documentation :book:
 - [ ] Enjoy a :beer: of a contributor :smile: (optional)
