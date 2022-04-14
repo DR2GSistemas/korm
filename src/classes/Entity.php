@@ -7,6 +7,7 @@ namespace DR2GSistemas\korm\classes;
 use DR2GSistemas\korm\interfaces\IEntity;
 use Exception;
 
+
 class Entity implements IEntity
 {
     /**
@@ -254,30 +255,8 @@ class Entity implements IEntity
         return $stmt;
     }
 
-    public function join(IEntity $entity): IEntity
-    {
-        return $this;
-    }
 
-    public function innerJoin(IEntity $entity): IEntity
-    {
-        return $this;
-    }
 
-    public function outterJoin(IEntity $entity): IEntity
-    {
-        return $this;
-    }
-
-    public function leftJoin(IEntity $entity): IEntity
-    {
-        return $this;
-    }
-
-    public function rightJoin(IEntity $entity): IEntity
-    {
-        return $this;
-    }
 
 
 }
