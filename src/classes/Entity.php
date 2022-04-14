@@ -4,11 +4,13 @@
 namespace DR2GSistemas\korm\classes;
 
 
+use DR2GSistemas\korm\interfaces\IDDL;
 use DR2GSistemas\korm\interfaces\IEntity;
 use Exception;
+use ReflectionClass;
 
 
-class Entity implements IEntity
+class Entity implements IEntity, IDDL
 {
     /**
      * @var string|null name of table, default is the pluralized class name
@@ -256,7 +258,45 @@ class Entity implements IEntity
     }
 
 
+    public function _createDDL(): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+        $ddl .= "CREATE TABLE " . $entity->getTableName();
+
+        $columns = [];
+        $indexes = []; //todo: implement indexes
+        $foreignKeys = []; //todo: implement foreign keys
+
+        foreach ($class->getProperties() as $property) {
+            foreach ($property->getAttributes(Column::class) as $column) {
+                $c = $column->newInstance();
+                $c->setName($property->getName());
+                $stmt = $c->getName() . " " . $c->getType();
+                $stmt .= $c->isNullable() ? "" : " NOT NULL";
+                $stmt .= $c->isPrimaryKey() ? " PRIMARY KEY" : "";
+                $stmt .= $c->isAutoIncrement() ? " AUTO_INCREMENT" : "";
+
+                $columns[] = $stmt;
+            }
 
 
+        }
+        $ddl .= " (" . implode(", ", $columns) . ")";
 
+        return $ddl;
+    }
+
+    public function _dropDDL(): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+        $ddl .= "DROP TABLE IF EXISTS " . $entity->getTableName();
+
+        return $ddl;
+    }
 }
