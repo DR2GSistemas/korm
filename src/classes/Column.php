@@ -19,26 +19,25 @@ class Column
 
     /**
      * Column constructor.
-     * @param string $name nombre del campo
      * @param string $type tipo del campo
      * @param bool $primarykey si es llave primaria
+     * @param bool $autoincrement si es autoincrementable
      * @param bool $nullable si es nulo
      * @param bool $index si es indice
      * @param bool $unique si es unico
      */
     public function __construct(
-        string $name,
-        string $type,
+        string $type = "int",
         bool $primarykey = false,
+        bool $autoincrement = false,
         bool $nullable = true,
         bool $index = false,
         bool $unique = false)
     {
-        $this->name = $name;
         $this->type = $type;
         $this->nullable = $nullable;
         $this->primaryKey = $primarykey;
-        $this->autoincrement = $primarykey;
+        $this->autoincrement = $autoincrement;
         $this->index = $index;
         $this->unique = $unique;
     }

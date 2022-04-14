@@ -15,11 +15,11 @@ class Hero extends Entity
      * @AutoIncrement
      */
 
-    #[Column("codigo", "int", true)]
+    #[Column("int", autoincrement: true, primarykey: true)]
     public int $codigo;
 
-    #[Column("nombre", "varchar(100)")]
-    public string $name;
+    #[Column("varchar(100)", index: true)]
+    public string $nombre;
 
     public function __construct()
     {
