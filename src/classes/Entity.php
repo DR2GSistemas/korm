@@ -299,4 +299,120 @@ class Entity implements IEntity, IDDL
 
         return $ddl;
     }
+
+    public function _createIndexesDDL(): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+
+        $indexes = [];
+
+        foreach ($class->getProperties() as $property) {
+            foreach ($property->getAttributes(Index::class) as $column) {
+
+                $c = $column->newInstance();
+
+                $c->setTablename($entity->getTableName());
+                $c->setFieldname($property->getName());
+
+                $stmt = $c->toStringCreate();
+
+                $indexes[] = $stmt;
+            }
+
+
+        }
+        $ddl .= implode("; ", $indexes);
+
+        return $ddl;
+    }
+
+    public function _dropIndexesDDL(): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+
+        $indexes = [];
+
+        foreach ($class->getProperties() as $property) {
+            foreach ($property->getAttributes(Index::class) as $column) {
+
+                $c = $column->newInstance();
+
+                $c->setTablename($entity->getTableName());
+                $c->setFieldname($property->getName());
+
+                $stmt = $c->toStringDrop();
+
+                $indexes[] = $stmt;
+            }
+
+
+        }
+        $ddl .= implode("; ", $indexes);
+
+        return $ddl;
+    }
+
+    public function _createForeignKeysDDL(): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+
+        $foreigns = [];
+
+        foreach ($class->getProperties() as $property) {
+            foreach ($property->getAttributes(ForeignKey::class) as $column) {
+
+                $c = $column->newInstance();
+
+                $c->setTablename($entity->getTableName());
+                $c->setFieldname($property->getName());
+
+                $stmt = $c->toStringCreate();
+
+                $foreigns[] = $stmt;
+            }
+
+
+        }
+        $ddl .= implode("; ", $foreigns);
+
+        return $ddl;
+    }
+
+    public function _dropForeignKeysDDL(): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+
+        $foreigns = [];
+
+        foreach ($class->getProperties() as $property) {
+            foreach ($property->getAttributes(ForeignKey::class) as $column) {
+
+                $c = $column->newInstance();
+
+                $c->setTablename($entity->getTableName());
+                $c->setFieldname($property->getName());
+
+                $stmt = $c->toStringDrop();
+
+                $foreigns[] = $stmt;
+            }
+
+
+        }
+        $ddl .= implode("; ", $foreigns);
+
+        return $ddl;
+    }
 }

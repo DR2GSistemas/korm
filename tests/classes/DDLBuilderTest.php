@@ -3,6 +3,7 @@
 namespace DR2GSistemas\korm\tests\classes;
 
 use DR2GSistemas\korm\classes\DDLBuilder;
+use DR2GSistemas\korm\dummies\Cart;
 use DR2GSistemas\korm\dummies\Hero;
 use DR2GSistemas\korm\dummies\Product;
 use PHPUnit\Framework\TestCase;
@@ -39,8 +40,6 @@ class DDLBuilderTest extends TestCase
         $stmt = $hero->_createDDL();
         $correct_stmt = "CREATE TABLE heroes (codigo int PRIMARY KEY AUTO_INCREMENT, nombre varchar(100))";
         $this->assertEquals($correct_stmt, $stmt);
-
-
     }
 
     public function testIDDL_deleteDDL()
@@ -54,6 +53,46 @@ class DDLBuilderTest extends TestCase
         $hero = new Hero();
         $stmt = $hero->_dropDDL();
         $correct_stmt = "DROP TABLE IF EXISTS heroes";
+        $this->assertEquals($correct_stmt, $stmt);
+
+    }
+
+    public function testIDD_createIndex()
+    {
+
+        $product = new Product();
+        $stmt = $product->_createIndexesDDL();
+        $correct_stmt = "ALTER TABLE products ADD INDEX idx_nombre (nombre)";
+        $this->assertEquals($correct_stmt, $stmt);
+
+    }
+
+    public function testDDL_dropIndex()
+    {
+
+        $product = new Product();
+        $stmt = $product->_dropIndexesDDL();
+        $correct_stmt = "ALTER TABLE products DROP INDEX idx_nombre";
+        $this->assertEquals($correct_stmt, $stmt);
+
+    }
+
+    public function testDDL_createForeignkey()
+    {
+
+        $product = new Cart();
+        $stmt = $product->_createForeignKeysDDL();
+        $correct_stmt = "ALTER TABLE carts ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(codigo) ON DELETE RESTRICT ON UPDATE RESTRICT";
+        $this->assertEquals($correct_stmt, $stmt);
+
+    }
+
+    public function testDDL_dropForeignkey()
+    {
+
+        $product = new Cart();
+        $stmt = $product->_dropForeignKeysDDL();
+        $correct_stmt = "ALTER TABLE carts DROP FOREIGN KEY fk_product_id";
         $this->assertEquals($correct_stmt, $stmt);
 
     }
