@@ -10,11 +10,11 @@ interface IDDL
 
     public function _dropDDL(): string;
 
-    public function _createIndexesDDL(): string;
+    public function _createIndexesDDL(): array;
 
-    public function _dropIndexesDDL(): string;
+    public function _dropIndexesDDL(): array;
 
-    public function _createForeignKeysDDL(): string;
+    public function _createForeignKeysDDL(): array;
 
-    public function _dropForeignKeysDDL(): string;
+    public function _dropForeignKeysDDL(): array;
 }

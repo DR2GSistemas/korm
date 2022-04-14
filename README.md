@@ -13,6 +13,7 @@ Pseudo library to be a orm utility.
 
 use DR2GSistemas\korm\classes\Column;
 use DR2GSistemas\korm\classes\Entity;
+use DR2GSistemas\korm\classes\Index;
 
 
 /*Declare a class and extends with Entity class*/
@@ -22,7 +23,8 @@ class Product extends Entity {
     //variables publicas tipadas
     #[Column(type:"integer",  primaryKey:true, autoincrement:true)]
     public int $id;
-    #[Column(type:"varchar(255)", nullable: false )]
+    #[Column(type:"varchar(255)", nullable: false )]  //declare as field varchar(255) not null
+    #[Index(indexname:"idx_product_name",unique: false)]  //declare as index with name idx_product_name and unique false
     public string $name;
     #[Column(type:"numeric(10,2)", nullable: true)]
     public float $price;
