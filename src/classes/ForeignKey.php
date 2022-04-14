@@ -11,6 +11,14 @@ class ForeignKey
     private string $tablename;
     private string $fieldname;
 
+    /**
+     * ForeignKey constructor.
+     * @param string $indexName
+     * @param string $table
+     * @param string $column
+     * @param string $onDelete
+     * @param string $onUpdate
+     */
     public function __construct(string $indexName, string $table, string $column, string $onDelete = 'RESTRICT', string $onUpdate = 'RESTRICT')
 
     {

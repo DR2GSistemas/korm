@@ -92,6 +92,14 @@ Desde Villeta, Paraguay con :sparkling_heart:
 
 - 0.1.4
     - add DDLBuilder class
+    - add IDDL interface for entities
+        - public function _createDDL(): string;
+        - public function _dropDDL(): string;
+        - public function _createIndexesDDL(): array;
+        - public function _dropIndexesDDL(): array;
+        - public function _createForeignKeysDDL(): array;
+        - public function _dropForeignKeysDDL(): array;
+        - public function _resetAutoIncrement(int $value = 1): string;
 
 **Todo:**
 

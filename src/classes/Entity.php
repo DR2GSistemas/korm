@@ -39,6 +39,7 @@ class Entity implements IEntity, IDDL
      */
     function getTablename(): string
     {
+
         if (!is_null($this->tablename)) {
             $tblname = $this->tablename;
         } else {
@@ -412,5 +413,18 @@ class Entity implements IEntity, IDDL
         }
 
         return $foreigns;
+    }
+
+
+    public function _resetAutoIncrement(int $value = 1): string
+    {
+        $class = new ReflectionClass(get_class($this));
+        $entity = $class->newInstance();
+
+        $ddl = "";
+
+        $ddl .= "ALTER TABLE " . $entity->getTableName() . " AUTO_INCREMENT = " . $value;
+
+        return $ddl;
     }
 }
