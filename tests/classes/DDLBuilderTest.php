@@ -57,43 +57,43 @@ class DDLBuilderTest extends TestCase
 
     }
 
-    public function testIDD_createIndex()
+    public function testIDDL_createIndex()
     {
 
         $product = new Product();
         $stmt = $product->_createIndexesDDL();
         $correct_stmt = "ALTER TABLE products ADD INDEX idx_nombre (nombre)";
-        $this->assertEquals($correct_stmt, $stmt);
+        $this->assertEquals($correct_stmt, $stmt[0]);
 
     }
 
-    public function testDDL_dropIndex()
+    public function testIDDL_dropIndex()
     {
 
         $product = new Product();
         $stmt = $product->_dropIndexesDDL();
         $correct_stmt = "ALTER TABLE products DROP INDEX idx_nombre";
-        $this->assertEquals($correct_stmt, $stmt);
+        $this->assertEquals($correct_stmt, $stmt[0]);
 
     }
 
-    public function testDDL_createForeignkey()
+    public function testIDDL_createForeignkey()
     {
 
         $product = new Cart();
         $stmt = $product->_createForeignKeysDDL();
         $correct_stmt = "ALTER TABLE carts ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(codigo) ON DELETE RESTRICT ON UPDATE RESTRICT";
-        $this->assertEquals($correct_stmt, $stmt);
+        $this->assertEquals($correct_stmt, $stmt[0]);
 
     }
 
-    public function testDDL_dropForeignkey()
+    public function testIDDL_dropForeignkey()
     {
 
         $product = new Cart();
         $stmt = $product->_dropForeignKeysDDL();
         $correct_stmt = "ALTER TABLE carts DROP FOREIGN KEY fk_product_id";
-        $this->assertEquals($correct_stmt, $stmt);
+        $this->assertEquals($correct_stmt, $stmt[0]);
 
     }
 

@@ -300,7 +300,7 @@ class Entity implements IEntity, IDDL
         return $ddl;
     }
 
-    public function _createIndexesDDL(): string
+    public function _createIndexesDDL(): array
     {
         $class = new ReflectionClass(get_class($this));
         $entity = $class->newInstance();
@@ -324,12 +324,12 @@ class Entity implements IEntity, IDDL
 
 
         }
-        $ddl .= implode("; ", $indexes);
 
-        return $ddl;
+
+        return $indexes;
     }
 
-    public function _dropIndexesDDL(): string
+    public function _dropIndexesDDL(): array
     {
         $class = new ReflectionClass(get_class($this));
         $entity = $class->newInstance();
@@ -353,12 +353,12 @@ class Entity implements IEntity, IDDL
 
 
         }
-        $ddl .= implode("; ", $indexes);
 
-        return $ddl;
+
+        return $indexes;
     }
 
-    public function _createForeignKeysDDL(): string
+    public function _createForeignKeysDDL(): array
     {
         $class = new ReflectionClass(get_class($this));
         $entity = $class->newInstance();
@@ -382,12 +382,11 @@ class Entity implements IEntity, IDDL
 
 
         }
-        $ddl .= implode("; ", $foreigns);
 
-        return $ddl;
+        return $foreigns;
     }
 
-    public function _dropForeignKeysDDL(): string
+    public function _dropForeignKeysDDL(): array
     {
         $class = new ReflectionClass(get_class($this));
         $entity = $class->newInstance();
@@ -411,8 +410,7 @@ class Entity implements IEntity, IDDL
 
 
         }
-        $ddl .= implode("; ", $foreigns);
 
-        return $ddl;
+        return $foreigns;
     }
 }
