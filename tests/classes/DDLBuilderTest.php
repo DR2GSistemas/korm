@@ -15,6 +15,7 @@ class DDLBuilderTest extends TestCase
     {
         $ddl = new DDLBuilder();
         $stmt = $ddl->createTable(Hero::class);
+        echo $stmt;
         $correct_stmt = "CREATE TABLE heroes (codigo int PRIMARY KEY AUTO_INCREMENT, nombre varchar(100))";
         $this->assertEquals($correct_stmt, $stmt);
 
@@ -24,6 +25,7 @@ class DDLBuilderTest extends TestCase
     {
         $ddl = new DDLBuilder();
         $stmt = $ddl->createTable(Product::class);
+        echo $stmt;
         $correct_stmt = "CREATE TABLE products (codigo int PRIMARY KEY AUTO_INCREMENT, nombre varchar(100) NOT NULL, precio numeric(10,2), date date)";
         $this->assertEquals($correct_stmt, $stmt);
     }
