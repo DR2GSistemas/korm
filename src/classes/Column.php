@@ -13,8 +13,6 @@ class Column
     private bool $nullable = true;
     private bool $primaryKey = false;
     private bool $autoincrement = false;
-    private bool $unique = false;
-    private bool $index = false;
 
 
     /**
@@ -23,23 +21,33 @@ class Column
      * @param bool $primarykey si es llave primaria
      * @param bool $autoincrement si es autoincrementable
      * @param bool $nullable si es nulo
-     * @param bool $index si es indice
-     * @param bool $unique si es unico
      */
     public function __construct(
         string $type = "int",
+        int $length = 50,
+        string $default = null,
         bool $primarykey = false,
         bool $autoincrement = false,
-        bool $nullable = true,
-        bool $index = false,
-        bool $unique = false)
+        bool $nullable = true)
     {
         $this->type = $type;
         $this->nullable = $nullable;
         $this->primaryKey = $primarykey;
         $this->autoincrement = $autoincrement;
-        $this->index = $index;
-        $this->unique = $unique;
+        $this->default = $default;
+        $this->length = $length;
+
+
+        if ($this->type == "string") {
+            $this->type = "varchar($length)";
+        }
+
+        if ($this->default != null) {
+            $this->nullable = false;
+
+        }
+
+
     }
 
     /**
@@ -154,5 +162,29 @@ class Column
         $this->index = $index;
     }
 
+
+    public function getColumnDDL()
+    {
+        $ddl = "";
+        $ddl .= $this->name . " " . $this->type;
+        if ($this->nullable) {
+            $ddl .= "";
+        } else {
+            $ddl .= " NOT NULL";
+        }
+        if ($this->primaryKey) {
+            $ddl .= " PRIMARY KEY";
+        }
+        if ($this->autoincrement) {
+            $ddl .= " AUTO_INCREMENT";
+        }
+
+        if ($this->default) {
+            $ddl .= " DEFAULT " . $this->default;
+        }
+
+
+        return $ddl;
+    }
 
 }

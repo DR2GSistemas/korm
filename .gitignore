@@ -5,4 +5,7 @@ composer.lock
 composer.phar
 .editorconfig
 phpunit.xml
-.run
+.run/
+tests/
+.env
+

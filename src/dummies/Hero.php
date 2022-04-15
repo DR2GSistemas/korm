@@ -18,7 +18,7 @@ class Hero extends Entity
     #[Column("int", autoincrement: true, primarykey: true)]
     public int $codigo;
 
-    #[Column("varchar(100)", index: true)]
+    #[Column("varchar(100)")]
     public string $nombre;
 
     public function __construct()
