@@ -13,21 +13,18 @@ class ForeignKey
 
     /**
      * ForeignKey constructor.
-     * @param string $indexName
+     * @param string $indexname
      * @param string $table
      * @param string $column
      * @param string $onDelete
      * @param string $onUpdate
      */
-    public function __construct(string $indexName, string $table, string $column, string $onDelete = 'RESTRICT', string $onUpdate = 'RESTRICT')
-
+    public function __construct(public string $indexname,
+                                public string $table,
+                                public string $column,
+                                public string $onDelete = 'RESTRICT',
+                                public string $onUpdate = 'RESTRICT')
     {
-        $this->indexName = $indexName;
-        $this->table = $table;
-        $this->column = $column;
-        $this->onDelete = $onDelete;
-        $this->onUpdate = $onUpdate;
-
     }
 
 
@@ -35,12 +32,12 @@ class ForeignKey
     {
         $restricts = "ON DELETE {$this->onDelete} ON UPDATE {$this->onUpdate}";
 
-        return "ALTER TABLE {$this->tablename} ADD CONSTRAINT {$this->indexName} FOREIGN KEY ({$this->fieldname}) REFERENCES {$this->table}($this->column) {$restricts }";
+        return "ALTER TABLE {$this->tablename} ADD CONSTRAINT {$this->indexname} FOREIGN KEY ({$this->fieldname}) REFERENCES {$this->table}($this->column) {$restricts }";
     }
 
     public function toStringDrop(): string
     {
-        return "ALTER TABLE {$this->tablename} DROP FOREIGN KEY {$this->indexName}";
+        return "ALTER TABLE {$this->tablename} DROP FOREIGN KEY {$this->indexname}";
     }
 
     /**

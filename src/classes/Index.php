@@ -19,12 +19,12 @@ class Index
      * @param bool $unique si el indice es unico
      * @param array $combinedFields campos a combinar para el indice
      */
-    public function __construct(string $indexname, string $sort = "ASC", bool $unique = false, array $combinedFields = [])
+    public function __construct(public string $indexname,
+                                public string $sort = "ASC",
+                                public bool $unique = false,
+                                public array $combinedFields = [])
     {
-        $this->indexname = $indexname;
-        $this->sort = $sort;
-        $this->unique = $unique;
-        $this->combinedFields = $combinedFields;
+
     }
 
     public function toStringCreate(): string
