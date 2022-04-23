@@ -167,6 +167,9 @@ class Column
     {
         $ddl = "";
         $ddl .= $this->name . " " . $this->type;
+        if ($this->length != null && $this->type == "varchar" && strpos($this->type, "(") === false) {
+            $ddl .= "(" . $this->length . ")";
+        }
         if ($this->nullable) {
             $ddl .= "";
         } else {

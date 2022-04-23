@@ -64,7 +64,6 @@ class HeroTest extends TestCase
     protected function setUp(): void
     {
         $this->test_data = ["name" => "the batman"];
-
     }
 
 

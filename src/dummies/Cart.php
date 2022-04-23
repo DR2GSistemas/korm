@@ -12,7 +12,7 @@ class Cart extends Entity
 
     public $id;
     public $user_id;
-    #[ForeignKey(indexName: "fk_product_id", table: "product", column: "codigo")]
+    #[ForeignKey(indexname: "fk_product_id", table: "product", column: "codigo")]
     public $product_id;
     public $quantity;
     public $created_at;
