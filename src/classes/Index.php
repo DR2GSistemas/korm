@@ -5,7 +5,7 @@ namespace DR2GSistemas\korm\classes;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
+#[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
 class Index
 {
     private string $tablename;
@@ -27,23 +27,32 @@ class Index
 
     }
 
+    /**
+     * Retorna DDL del indice a crear
+     * @return string
+     */
     public function toStringCreate(): string
     {
         if ($this->unique) {
-            return "ALTER TABLE {$this->tablename} ADD UNIQUE INDEX {$this->indexname} ({$this->fieldname})";
+            return "ALTER TABLE {$this->tablename} ADD UNIQUE INDEX {$this->indexname} ({$this->fieldname} {$this->sort})";
         } else {
-            return "ALTER TABLE {$this->tablename} ADD INDEX {$this->indexname} ({$this->fieldname})";
+            return "ALTER TABLE {$this->tablename} ADD INDEX {$this->indexname} ({$this->fieldname} {$this->sort})";
         }
 
 
     }
 
+    /**
+     * Retorna DDL para eliminar el indice
+     * @return string
+     */
     public function toStringDrop(): string
     {
         return "ALTER TABLE {$this->tablename} DROP INDEX {$this->indexname}";
     }
 
     /**
+     * Retorna nombre de la tabla
      * @return string
      */
     public function getTablename(): string
@@ -52,6 +61,7 @@ class Index
     }
 
     /**
+     * Establece el nombre de la tabla
      * @param string $tablename
      */
     public function setTablename(string $tablename): void
@@ -60,6 +70,7 @@ class Index
     }
 
     /**
+     * Obtiene el nombre del campo
      * @return string
      */
     public function getFieldname(): string
@@ -68,6 +79,7 @@ class Index
     }
 
     /**
+     * Establece el nombre del campo
      * @param string $fieldname
      */
     public function setFieldname(string $fieldname): void
