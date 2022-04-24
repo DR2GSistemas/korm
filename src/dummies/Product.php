@@ -21,6 +21,8 @@ class Product extends Entity
     #[Column("numeric(10,2)")]
     public float $precio;
     #[Column("date")]
+    #[Index("idx_fecha")]
+    #[Index("idx_fecha_desc", sort: "DESC")]
     public $date;
 
 

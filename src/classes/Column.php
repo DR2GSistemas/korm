@@ -18,17 +18,21 @@ class Column
     /**
      * Column constructor.
      * @param string $type tipo del campo
+     * @param int $length longitud del campo
+     * @param string|null $default
      * @param bool $primarykey si es llave primaria
      * @param bool $autoincrement si es autoincrementable
      * @param bool $nullable si es nulo
+     * @param string $onUpdate si se actualiza
      */
     public function __construct(
         string $type = "int",
         int $length = 50,
-        string $default = null,
+        ?string $default = null,
         bool $primarykey = false,
         bool $autoincrement = false,
-        bool $nullable = true)
+        bool $nullable = true,
+        ?string $onUpdate = null)
     {
         $this->type = $type;
         $this->nullable = $nullable;
@@ -36,6 +40,7 @@ class Column
         $this->autoincrement = $autoincrement;
         $this->default = $default;
         $this->length = $length;
+        $this->onUpdate = $onUpdate;
 
 
         if ($this->type == "string") {
@@ -170,11 +175,12 @@ class Column
         if ($this->length != null && $this->type == "varchar" && strpos($this->type, "(") === false) {
             $ddl .= "(" . $this->length . ")";
         }
-        if ($this->nullable) {
-            $ddl .= "";
+        if ($this->nullable and $this->primaryKey == false) {
+            $ddl .= " NULL ";
         } else {
             $ddl .= " NOT NULL";
         }
+
         if ($this->primaryKey) {
             $ddl .= " PRIMARY KEY";
         }
@@ -183,7 +189,10 @@ class Column
         }
 
         if ($this->default) {
-            $ddl .= " DEFAULT " . $this->default;
+            $ddl .= " DEFAULT " . $this->default . "";
+        }
+        if ($this->onUpdate) {
+            $ddl .= " ON UPDATE " . $this->onUpdate . "";
         }
 
 
