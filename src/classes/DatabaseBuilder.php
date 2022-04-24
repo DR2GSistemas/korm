@@ -148,5 +148,22 @@ class DatabaseBuilder
         return $this->getExistsTables() === 0;
     }
 
+    public function createAll(array $tablenames)
+    {
+        //iterate and create tables and indexes
+        foreach ($tablenames as $table) {
+            $this->createTable($table);
+            $this->createIndex($table);
+
+        }
+
+        //iterate and create foreignkeys
+        foreach ($tablenames as $table) {
+            $this->createForeignKey($table);
+        }
+
+
+    }
+
 
 }
