@@ -1,17 +1,16 @@
 <?php
 
 
-namespace DR2GSistemas\korm\classes;
+namespace DR2GSistemas\korm\attributes;
 
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS)]
-class Table
+class Entity
 {
 
-    public function __construct(string $tablename)
+    public function __construct(public string $name)
     {
-        $this->tablename = $tablename;
     }
 
     /**
@@ -20,8 +19,6 @@ class Table
      */
     public function getTablename(): string
     {
-        return $this->tablename;
+        return strtolower($this->name);
     }
-
-
 }

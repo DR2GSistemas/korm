@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DR2GSistemas\korm\classes;
+namespace DR2GSistemas\korm\attributes;
 
 use Attribute;
 
